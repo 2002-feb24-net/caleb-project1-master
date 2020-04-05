@@ -1,0 +1,12 @@
+C:\revature\caleb-project1\BookStore.Infrastructure\bin\Debug\netcoreapp3.1\BookStore.Domain.dll
+C:\revature\caleb-project1\BookStore.Infrastructure\obj\Debug\netcoreapp3.1\BookStore.Infrastructure.csprojAssemblyReference.cache
+C:\revature\caleb-project1\BookStore.Infrastructure\obj\Debug\netcoreapp3.1\BookStore.Infrastructure.AssemblyInfoInputs.cache
+C:\revature\caleb-project1\BookStore.Infrastructure\obj\Debug\netcoreapp3.1\BookStore.Infrastructure.AssemblyInfo.cs
+C:\revature\caleb-project1\BookStore.Infrastructure\bin\Debug\netcoreapp3.1\BookStore.Infrastructure.deps.json
+C:\revature\caleb-project1\BookStore.Infrastructure\bin\Debug\netcoreapp3.1\BookStore.Infrastructure.dll
+C:\revature\caleb-project1\BookStore.Infrastructure\bin\Debug\netcoreapp3.1\BookStore.Infrastructure.pdb
+C:\revature\caleb-project1\BookStore.Infrastructure\bin\Debug\netcoreapp3.1\BookStore.Domain.pdb
+C:\revature\caleb-project1\BookStore.Infrastructure\obj\Debug\netcoreapp3.1\BookStore.Infrastructure.csproj.CoreCompileInputs.cache
+C:\revature\caleb-project1\BookStore.Infrastructure\obj\Debug\netcoreapp3.1\BookStore.Infrastructure.csproj.CopyComplete
+C:\revature\caleb-project1\BookStore.Infrastructure\obj\Debug\netcoreapp3.1\BookStore.Infrastructure.dll
+C:\revature\caleb-project1\BookStore.Infrastructure\obj\Debug\netcoreapp3.1\BookStore.Infrastructure.pdb

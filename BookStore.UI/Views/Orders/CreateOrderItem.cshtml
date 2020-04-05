@@ -1,0 +1,86 @@
+﻿@model BookStore.UI.Models.CreateOrderViewModel
+
+@{
+    ViewData["Title"] = "CreateOrderItem";
+}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+</head>
+<h1>Create Order Item</h1>
+
+<h4>Inventory</h4>
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState["QuantityError"].Errors.Count > 0)
+{
+    <div class="my-alert">
+        <strong>Error!</strong> @ViewData.ModelState["QuantityError"].Errors.First().ErrorMessage
+    </div>
+}
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory.First().Products.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory.First().Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Inventory.First().Products.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <div id="item-card-container" style="display:flex;justify-content:space-around;max-width:80vw;flex-wrap:wrap">
+            @foreach (var item in Model.Inventory)
+            {
+                Html.RenderPartial("_ItemCard", item);
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Products.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Products.Price)
+                    </td>
+                </tr>
+            }
+        </div>
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateOrderItem">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.Item.ProductId" class="control-label">Product Name</label>
+                <select asp-for="@Model.Item.ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Item.Quantity" class="control-label">Quantity</label>
+                <input asp-for="@Model.Item.Quantity" class="form-control" />
+                <span asp-validation-for="@Model.Item.Quantity" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+            <div class="form-group">
+                <input asp-action="AddMore" type="submit" value="Add more items" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

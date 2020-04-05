@@ -1,0 +1,77 @@
+﻿@model BookStore.Domain.Model.Order
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OrderTime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Customers.Username)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Customers.Username)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Stores.Address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Stores.Address)
+        </dd>
+    </dl>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderItem.First().P.P.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderItem.First().P.P.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderItem.First().Quantity)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderItem)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem=>item.P.P.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem=>item.P.P.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem=>item.Quantity)
+                </td>
+            </tr>
+        }
+    </tbody>
+    
+</table>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

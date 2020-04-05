@@ -1,0 +1,118 @@
+﻿@model IEnumerable<BookStore.Domain.Model.Orders>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css"/>
+</head>
+<h1>Orders</h1>
+<div id="function-continer">
+    <div id="function-buttons">
+        <div id="function-buttons-center">
+            <button id="search-cust-orders">Search Customer Orders</button>
+            <button id="search-loc-orders">Search Store Orders</button>
+            <button>
+                <a asp-action="Create" class="button">Create an Order</a>
+            </button>
+            
+            @using (Html.BeginForm("SortOrders"))
+            {
+                <div class="form-group">
+                    <select class="form-control" name="SortOption">
+                        <option value="Earliest">Earliest</option>
+                        <option value="Latest">Latest</option>
+                        <option value="Most Expensive">Most Expensive</option>
+                        <option value="Least Expensive">Least Expensive</option>
+                    </select>
+                    <input asp-action="SortOrders" name="SortOption" class="sort-orders" type="submit" value="Sort" id="sort-btn"/>
+                </div>
+            }
+        </div>
+    </div>
+    <div id="function-inputs">
+        @using (Html.BeginForm("SearchLocOrders"))
+        {
+            <input type="text" class="search-loc" style="display:none;" name="locName" placeholder="Location Name" />
+
+            <input asp-action="SearchLocOrders" class="search-loc" type="submit" value="Search" style="display:none;" id="search-loc-begin" />
+        }
+        @using (Html.BeginForm("SearchCustOrders"))
+        {
+            <input type="text" class="search-cust" style="display:none;" name="firstName" placeholder="First Name" />
+            <input type="text" class="search-cust" style="display:none;" name="lastName" placeholder="Last Name" />
+            <input asp-action="SearchCustOrders" class="search-cust" type="submit" value="Search" style="display:none;" id="search-cust-begin" />
+        }
+        
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        @section scripts{
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#search-cust-orders').click(function () {
+                        $('.search-cust').show(100);
+                    });
+                });
+                $(document).ready(function () {
+                    $('#search-loc-orders').click(function () {
+                        $('.search-loc').show(100);
+                    });
+                });
+            </script>
+        }
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customers.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customers.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customers.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores.Address)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customers.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customers.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customers.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stores.Address)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

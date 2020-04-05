@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "dgSpecHash": "hcTGVFKEtB41Txx9RMoHamKXEBhPADqhDQbEje4DRoNPjNk2iDKbrZoZbBIGXgWBDYq6yXOe9VwG2iHERhbb2A==",
+  "success": false,
+  "projectFilePath": "C:\\revature\\caleb-project1\\BookStore.UI\\BookStore.UI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\cjcro\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.0.1\\microsoft.aspnetcore.app.ref.3.0.1.nupkg.sha512",
+    "C:\\Users\\cjcro\\.nuget\\packages\\microsoft.netcore.app.ref\\3.0.0\\microsoft.netcore.app.ref.3.0.0.nupkg.sha512",
+    "C:\\Users\\cjcro\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.0.3\\microsoft.netcore.app.host.win-x64.3.0.3.nupkg.sha512",
+    "C:\\Users\\cjcro\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.0.0\\microsoft.windowsdesktop.app.ref.3.0.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1201",
+      "level": "Error",
+      "message": "Project BookStore.Domain is not compatible with netcoreapp3.0 (.NETCoreApp,Version=v3.0). Project BookStore.Domain supports: netcoreapp3.1 (.NETCoreApp,Version=v3.1)",
+      "libraryId": "BookStore.Domain",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.0"
+      ]
+    },
+    {
+      "code": "NU1201",
+      "level": "Error",
+      "message": "Project BookStore.Infrastructure is not compatible with netcoreapp3.0 (.NETCoreApp,Version=v3.0). Project BookStore.Infrastructure supports: netcoreapp3.1 (.NETCoreApp,Version=v3.1)",
+      "libraryId": "BookStore.Infrastructure",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.0"
+      ]
+    }
+  ]
+}

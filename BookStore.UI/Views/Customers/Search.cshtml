@@ -1,0 +1,78 @@
+﻿@model IEnumerable<BookStore.Domain.Model.Customers>
+@{
+    ViewData["Title"] = "Search";
+}
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+    </head>
+
+<h1>Customers</h1>
+<div id="function-continer">
+    <div id="function-buttons">
+        <div id="function-buttons-center">
+            <button id="search-cust">Search Customers</button>
+            <button>
+                <a asp-action="Create">Create New</a>
+            </button>
+        </div>
+        </div>
+        <div id="function-inputs">
+            <input type="text" id="search-input-fn" style="display:none;" name="SearchFirstName" placeholder="First Name" />
+            <input type="text" id="search-input-ln" style="display:none;" name="SearchLastName" placeholder="Last Name" />
+            <button>
+                <a asp-action="Search" style="display:none;" id="search-begin">Begin Search</a>
+            </button>
+
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            @section scripts{
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#search-cust').click(function () {
+                            $('#search-input-fn').show(100);
+                            $('#search-input-ln').show(100);
+                            $('#search-begin').show(100);
+                        });
+                    });
+                </script>
+            }
+        </div>
+    </div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pwd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

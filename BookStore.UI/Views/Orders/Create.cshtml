@@ -1,0 +1,47 @@
+﻿@model BookStore.UI.Models.OrderViewModel;
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Start Order:</h1>
+
+<h4>Customer Info</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label">Username</label>
+                <input asp-for="Username" class="form-control" placeholder="Username" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pwd" class="control-label">Password</label>
+                <input asp-for="Pwd" class="form-control" placeholder="Password"/>
+            </div>
+            @if (!ViewData.ModelState.IsValid && ViewData.ModelState["VerificationError"].Errors.Count > 0)
+            {
+                <div class="my-alert">
+                    <strong>Error!</strong> @ViewData.ModelState["VerificationError"].Errors.First().ErrorMessage
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="StoreId" class="control-label">Store Address</label>
+                <select asp-for="StoreId" class="form-control" asp-items="ViewBag.StoreId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
