@@ -10,6 +10,6 @@ namespace BookStore.UI.Models
     public class CreateOrderViewModel
     {
         public List<Inventory> Inventory { get; set; }
-        public Orders Item { get; set; }
+        public OrderItem Item { get; set; }
     }
 }

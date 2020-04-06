@@ -58,11 +58,11 @@ namespace BookStore.UI.Models
         /// <summary>
         /// nav prop to ordered from location
         /// </summary>
-        public virtual Stores Stores { get; set; }
+        public virtual Stores Store { get; set; }
         /// <summary>
         /// Navigation property to ordering customer
         /// </summary>
-        public virtual Customers Customers { get; set; }
+        public virtual Customers Customer { get; set; }
 
   /*      /// <summary>
         /// Orders belonging to this customer

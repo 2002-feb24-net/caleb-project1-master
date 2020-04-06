@@ -56,21 +56,21 @@ namespace BookStore.MSTest
                     int initial_count = custs.ToList().Count;
                     Customers cust1 = new Customers
                     {
-                        Username = "usert",
+                        Username = "usert1",
                         Password = "passwordt",
                         FirstName = "fsm",
                         LastName = "lsm"
                     };
                     Customers cust2 = new Customers
                     {
-                        Username = "usert",
+                        Username = "usert2",
                         Password = "passwordt",
                         FirstName = "fsm",
                         LastName = "lsm"
                     };
                     Customers cust3 = new Customers
                     {
-                        Username = "usert",
+                        Username = "usert3",
                         Password = "passwordt",
                         FirstName = "fsm",
                         LastName = "lsm"
@@ -109,7 +109,7 @@ namespace BookStore.MSTest
                     Repo = new CustomersDAL(context);
                     Customers cust1 = new Customers
                     {
-                        Username = "usert",
+                        Username = "usert1",
                         Password = "passwordt",
                         FirstName = "fsm",
                         LastName = "lsm"
@@ -155,8 +155,8 @@ namespace BookStore.MSTest
                     int initialCount = custs.ToList().Count;
                     var newCust = new Customers
                     {
-                        Username = "usert",
-                        Password = "passwordt",
+                        Username = "usertd",
+                        Password = "passwordtd",
                         FirstName = "fsm",
                         LastName = "lsm"
                     };

@@ -44,7 +44,7 @@ namespace BookStore.Infrastructure
         {
             try
             {
-                var toRemove = context.Orders.Include(x => x.CustomerId).FirstOrDefault(x => x.Id == id);
+                var toRemove = context.Orders.Include(x => x.OrderItem).FirstOrDefault(x => x.Id == id);
                 context.OrderItem.RemoveRange(toRemove.OrderItem);
                 context.Remove(toRemove);
                 context.SaveChanges();

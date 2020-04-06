@@ -85,12 +85,10 @@ namespace BookStore.MSTest
                     int initial_count = custs.ToList().Count;
                     Orders ord1 = new Orders
                     {
-                        ProductId = 1,
                         CustomerId = 1,
                         StoreId = 1,
                         Price = 10,
-                        OrderTime = DateTime.Now,
-                        Quantity = 1
+                        OrderTime = DateTime.Now
                     };
 
                     int x = Repo.Add(ord1);
@@ -128,12 +126,10 @@ namespace BookStore.MSTest
                     LocDal = new StoresDAL(context);
                     var ord = new Orders
                     {
-                        ProductId = 1,
                         CustomerId = 1,
                         StoreId = 1,
                         Price = 10,
-                        OrderTime = DateTime.Now,
-                        Quantity = 1
+                        OrderTime = DateTime.Now
                     };
                     int target = Repo.Add(ord);
                     var toEdit = Repo.FindByID(target);
@@ -174,12 +170,10 @@ namespace BookStore.MSTest
                     int initialCount = custs.ToList().Count;
                     var newOrd = new Orders
                     {
-                        ProductId = 1,
                         CustomerId = 1,
                         StoreId = 1,
                         Price = 10,
-                        OrderTime = DateTime.Now,
-                        Quantity = 1
+                        OrderTime = DateTime.Now
                     };
                     int addedID = Repo.Add(newOrd);
 
@@ -217,24 +211,20 @@ namespace BookStore.MSTest
                     LocDal = new StoresDAL(context);
                     var newOrd = new Orders
                     {
-                        ProductId = 1,
                         CustomerId = 1,
                         StoreId = 1,
                         Price = 10,
-                        OrderTime = DateTime.Now,
-                        Quantity = 1
+                        OrderTime = DateTime.Now
                     };
                     Repo.Add(newOrd);
                     var custs = await Repo.GetOrds();
                     int initialCount = custs.ToList().Count;
                     var newOrd1 = new Orders
                     {
-                        ProductId = 1,
                         CustomerId = 1,
                         StoreId = 1,
                         Price = 10,
-                        OrderTime = DateTime.Now,
-                        Quantity = 1
+                        OrderTime = DateTime.Now
                     };
                     int rem = Repo.Add(newOrd1);
 
@@ -242,6 +232,129 @@ namespace BookStore.MSTest
                     int current = custs.ToList().Count;
                     Assert.AreEqual(initialCount, initialCount);
                     Repo.Remove(rem);
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        [TestMethod]
+        public void TestOrdTotalUpdate()
+        {
+            OrdersDAL Repo;
+            StoresDAL LocDal;
+            var conn = new SqliteConnection("DataSource=:memory:");
+            conn.Open();
+            try
+            {
+                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                    .UseSqlite(conn)
+                    .Options;
+                using (var context = new BookStoreContext(options))
+                {
+                    context.Database.EnsureCreated();
+                }
+                using (var context = new BookStoreContext(options))
+                {
+                    TestSetup(context);
+                    Repo = new OrdersDAL(context);
+                    LocDal = new StoresDAL(context);
+                    var newCust = new Orders
+                    {
+                        CustomerId = 1,
+                        StoreId = 1,
+                        Price = 10,
+                        OrderTime = DateTime.Now
+                    };
+                    int addedID = Repo.Add(newCust);
+                    var orderItem = new OrderItem
+                    {
+                        OrderId = addedID,
+                        ProductId = 4,
+                        Quantity = 2,
+                    };
+                    Repo.AddOrderItem(orderItem);
+                    var order = Repo.FindByID(addedID);
+                    Assert.AreEqual(0, order.Price);
+                    Repo.RemoveOrderItem(orderItem);
+                    Repo.Remove(addedID);
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        [DataTestMethod]
+        [DataRow(0)]
+        [DataRow(100000000)]
+        public void TestInvalidQty(int qty)
+        {
+            OrdersDAL Repo;
+            StoresDAL LocDal;
+            var conn = new SqliteConnection("DataSource=:memory:");
+            conn.Open();
+            try
+            {
+                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                    .UseSqlite(conn)
+                    .Options;
+                using (var context = new BookStoreContext(options))
+                {
+                    context.Database.EnsureCreated();
+                }
+                using (var context = new BookStoreContext(options))
+                {
+                    TestSetup(context);
+                    Repo = new OrdersDAL(context);
+                    LocDal = new StoresDAL(context);
+                    var orderItem = new OrderItem
+                    {
+                        OrderId = 1,
+                        ProductId = 5,
+                        Quantity = qty,
+                    };
+                    Assert.IsFalse(orderItem.ValidateQuantity(LocDal.GetQty(5)));
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        [DataTestMethod]
+        [DataRow(1)]
+        [DataRow(3)]
+        public void TestValidQty(int qty)
+        {
+            OrdersDAL Repo;
+            StoresDAL LocDal;
+            var conn = new SqliteConnection("DataSource=:memory:");
+            conn.Open();
+            try
+            {
+                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                    .UseSqlite(conn)
+                    .Options;
+                using (var context = new BookStoreContext(options))
+                {
+                    context.Database.EnsureCreated();
+                }
+                using (var context = new BookStoreContext(options))
+                {
+                    TestSetup(context);
+                    Repo = new OrdersDAL(context);
+                    LocDal = new StoresDAL(context);
+                    var orderItem = new OrderItem
+                    {
+                        OrderId = 1,
+                        ProductId = 5,
+                        Quantity = qty
+                    };
+                    Assert.IsTrue(orderItem.ValidateQuantity(LocDal.GetQty(5)));
                 }
             }
             finally
