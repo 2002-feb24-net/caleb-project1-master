@@ -1,4 +1,4 @@
-﻿using P0Library.Model;
+﻿using BookStore.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;

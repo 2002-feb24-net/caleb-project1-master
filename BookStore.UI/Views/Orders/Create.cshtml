@@ -1,4 +1,4 @@
-﻿@model BookStore.UI.Models.OrderViewModel;
+﻿@model BookStore.UI.Models.OrderViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -18,8 +18,8 @@
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Pwd" class="control-label">Password</label>
-                <input asp-for="Pwd" class="form-control" placeholder="Password"/>
+                <label asp-for="Password" class="control-label">Password</label>
+                <input asp-for="Password" class="form-control" placeholder="Password"/>
             </div>
             @if (!ViewData.ModelState.IsValid && ViewData.ModelState["VerificationError"].Errors.Count > 0)
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using BookStore.Domain;
 using BookStore.Domain.Model;
 
 namespace BookStore.UI.Models
@@ -11,7 +12,7 @@ namespace BookStore.UI.Models
     {
         public OrderViewModel()
         {
-            Orders = new HashSet<Orders>();
+            OrderItem = new HashSet<OrderItem>();
         }
 
         [Required(ErrorMessage = "Username is required")]
@@ -63,9 +64,14 @@ namespace BookStore.UI.Models
         /// </summary>
         public virtual Customers Customers { get; set; }
 
+  /*      /// <summary>
+        /// Orders belonging to this customer
+        /// </summary>
+        public virtual ICollection<Orders> Orders { get; set; }     */
+
         /// <summary>
         /// Items belonging to this order
         /// </summary>
-        public virtual ICollection<Orders> Orders { get; set; }
+        public virtual ICollection<OrderItem> OrderItem { get; set; }
     }
 }

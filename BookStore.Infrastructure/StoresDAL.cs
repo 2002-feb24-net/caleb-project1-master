@@ -1,6 +1,6 @@
 ﻿using BookStore.Domain;
+using BookStore.Domain.Model;
 using Microsoft.EntityFrameworkCore;
-using P0Library.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

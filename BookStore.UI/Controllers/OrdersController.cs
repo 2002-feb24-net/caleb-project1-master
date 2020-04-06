@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BookStore.Domain;
+using Microsoft.EntityFrameworkCore;
+using BookStore.Domain.Model;
 
 namespace BookStore.UI.Controllers
 {
@@ -97,7 +99,7 @@ namespace BookStore.UI.Controllers
             return inventoryItemModel;
         }
 
-        private bool AddOrderItem(Orders item)
+        private bool AddOrderItem(OrderItem item)
         {
             // save storeid from previous failed order and current quantity in tempdata - will overwrite when assigning to previous item
             int storeID = Convert.ToInt32(TempData["StoreID"]);
@@ -119,7 +121,7 @@ namespace BookStore.UI.Controllers
             return false;
         }
 
-        public IActionResult AddMore([Bind("Id", "ProductId", "CustomerId", "StoreId", "Price", "OrderTime", "Quantity")] Orders item)
+        public IActionResult AddMore([Bind("Id", "OrderId", "ProductId", "Quantity")] OrderItem item)
         {
             if (!AddOrderItem(item))
             {
@@ -143,7 +145,7 @@ namespace BookStore.UI.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrderItem([Bind("Id", "ProductId", "CustomerId", "StoreId", "Price", "OrderTime", "Quantity")] Orders item)
+        public IActionResult CreateOrderItem([Bind("Id", "OrderId", "ProductId", "Quantity")] OrderItem item)
         {
 
             if (AddOrderItem(item))
@@ -178,7 +180,7 @@ namespace BookStore.UI.Controllers
                 ModelState.AddModelError("VerificationError", "Invalid username/password combination, please try again.");
             }
             logger.LogInformation("Creating order");
-            ViewData["StoreId"] = new SelectList(_context.GetLocs(), "Id", "Name");
+            ViewData["StoreId"] = new SelectList(_context.GetStores(), "Id", "Address");
             return View();
         }
 
@@ -187,7 +189,7 @@ namespace BookStore.UI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,CustId,LocId,Username,Pwd")] OrderViewModel order)
+        public IActionResult Create([Bind("Username,Password,Id,StoreId,CustomerId")] OrderViewModel order)
         {
             string Username = order.Username, Password = order.Password;
             if (ModelState.IsValid)
@@ -201,7 +203,7 @@ namespace BookStore.UI.Controllers
                         StoreId = order.StoreId,
                         CustomerId = cid,
                         Price = 0,
-                        Timestamp = TimeZoneInfo.ConvertTime(DateTime.Now, cst)
+                        OrderTime = TimeZoneInfo.ConvertTime(DateTime.Now, cst)
                     };
                     TempData["OrderID"] = _context.Add(new_order);
                     TempData["StoreID"] = order.StoreId;
@@ -232,7 +234,7 @@ namespace BookStore.UI.Controllers
             }
             IEnumerable<Customers> custEnum = await _custContext.GetCusts();
             ViewData["CustomerId"] = new SelectList(custEnum, "Id", "FirstName", order.CustomerId);
-            ViewData["StoreId"] = new SelectList(_context.GetLocs(), "Id", "Address", order.StoreId);
+            ViewData["StoreId"] = new SelectList(_context.GetStores(), "Id", "Address", order.StoreId);
             return View(order);
         }
 
@@ -241,7 +243,7 @@ namespace BookStore.UI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CustId,LocId,Total,Timestamp")] Orders order)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductId,CustomerId,StoreId,Price,OrderTime,Quantity")] Orders order)
         {
             if (id != order.Id)
             {
@@ -268,8 +270,8 @@ namespace BookStore.UI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             IEnumerable<Customers> custEnum = await _custContext.GetCusts();
-            ViewData["CustomerId"] = new SelectList(custEnum, "Id", "FirstName", order.CustId);
-            ViewData["StoreId"] = new SelectList(_context.GetLocs(), "Id", "Address", order.LocId);
+            ViewData["CustomerId"] = new SelectList(custEnum, "Id", "FirstName", order.CustomerId);
+            ViewData["StoreId"] = new SelectList(_context.GetStores(), "Id", "Address", order.StoreId);
             return View(order);
         }
 

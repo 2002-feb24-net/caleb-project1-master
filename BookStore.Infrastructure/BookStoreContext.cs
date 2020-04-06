@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using P0Library.Model;
+﻿using BookStore.Domain.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,6 +19,7 @@ namespace BookStore.Infrastructure
 
         public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
+        public virtual DbSet<Orders> OrderItem { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Products> Products { get; set; }
         public virtual DbSet<Stores> Stores { get; set; }
@@ -68,6 +69,24 @@ namespace BookStore.Infrastructure
                     .WithMany(p => p.Inventory)
                     .HasForeignKey(d => d.StoreId)
                     .HasConstraintName("FK__Inventory__Store__74794A92");
+            });
+
+            modelBuilder.Entity<OrderItem>(entity =>
+            {
+                entity.Property(e => e.Id)
+                    .HasColumnName("ID")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.OrderId).HasColumnName("OrderID");
+
+                entity.Property(e => e.ProductId).HasColumnName("ProductID");
+
+                entity.Property(e => e.Quantity).HasColumnName("Quantity");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.OrderItem)
+                    .HasForeignKey(d => d.ProductId)
+                    .HasConstraintName("FK__Orders__Customer__6FB49575");
             });
 
             modelBuilder.Entity<Orders>(entity =>

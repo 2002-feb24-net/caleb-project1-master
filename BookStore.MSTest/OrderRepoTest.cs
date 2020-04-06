@@ -1,8 +1,8 @@
-﻿using BookStore.Infrastructure;
+﻿using BookStore.Domain.Model;
+using BookStore.Infrastructure;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using P0Library.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

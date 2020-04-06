@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BookStore.Infrastructure;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using BookStore.Domain;
 
 namespace BookStore.UI
 {
@@ -37,7 +39,7 @@ namespace BookStore.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BookStoreContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IOrdersDAL, OrdersDal>();
+            services.AddScoped<IOrdersDAL, OrdersDAL>();
             services.AddScoped<ICustomersDAL, CustomersDAL>();
             services.AddScoped<IStoresDAL, StoresDAL>();
             services.AddLogging(logger =>

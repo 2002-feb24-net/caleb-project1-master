@@ -1,4 +1,4 @@
-﻿using P0Library.Model;
+﻿using BookStore.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -40,6 +40,14 @@ namespace BookStore.Domain
         /// </summary>
         /// <param name="cust"></param>
         public void Edit(Orders ord);
+
+        /// <summary>
+        /// Adds order item to database 
+        /// </summary>
+        /// <param name="OrderId">order id</param>
+        /// <param name="ProductId">product id</param>
+        /// <param name="Quantity">quantity </param>
+        void AddOrderItem(OrderItem item);
 
         /// <summary>
         /// Retrieves all orders from db by given search parameter and id

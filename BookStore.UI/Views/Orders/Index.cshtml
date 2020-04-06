@@ -72,16 +72,16 @@
                 @Html.DisplayNameFor(model => model.OrderTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customers.Username)
+                @Html.DisplayNameFor(model => model.Customer.Username)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customers.FirstName)
+                @Html.DisplayNameFor(model => model.Customer.FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Customers.LastName)
+                @Html.DisplayNameFor(model => model.Customer.LastName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Stores.Address)
+                @Html.DisplayNameFor(model => model.Store.Address)
             </th>
             <th></th>
         </tr>
@@ -96,16 +96,16 @@
                 @Html.DisplayFor(modelItem => item.OrderTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customers.Username)
+                @Html.DisplayFor(modelItem => item.Customer.Username)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customers.FirstName)
+                @Html.DisplayFor(modelItem => item.Customer.FirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Customers.LastName)
+                @Html.DisplayFor(modelItem => item.Customer.LastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Stores.Address)
+                @Html.DisplayFor(modelItem => item.Store.Address)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

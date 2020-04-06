@@ -1,6 +1,6 @@
 ﻿using BookStore.Domain;
+using BookStore.Domain.Model;
 using Microsoft.EntityFrameworkCore;
-using P0Library.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +22,12 @@ namespace BookStore.Infrastructure
             this.context = new BookStoreContext();
         }
 
+        public void RemoveOrderItem(OrderItem item)
+        {
+            context.OrderItem.Remove(item);
+            context.SaveChanges();
+        }
+
         public Orders FindByID(int id)
         {
             var res = context.Orders
@@ -39,6 +45,7 @@ namespace BookStore.Infrastructure
             try
             {
                 var toRemove = context.Orders.Include(x => x.CustomerId).FirstOrDefault(x => x.Id == id);
+                context.OrderItem.RemoveRange(toRemove.OrderItem);
                 context.Remove(toRemove);
                 context.SaveChanges();
             }
@@ -84,6 +91,13 @@ namespace BookStore.Infrastructure
         public void AddProduct(Products item)
         {
             context.Products.Add(item);
+            context.SaveChanges();
+        }
+
+        //Returns price of added item
+        public void AddOrderItem(OrderItem item)
+        {
+            context.OrderItem.Add(item);
             context.SaveChanges();
         }
 
