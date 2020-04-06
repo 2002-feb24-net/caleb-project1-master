@@ -37,7 +37,6 @@ Price money,
 OrderTime datetime,
 Quantity int,
 PRIMARY KEY (ID),
-FOREIGN KEY (ProductID) REFERENCES Products(ID),
 FOREIGN KEY (CustomerID) REFERENCES Customers(ID),
 FOREIGN KEY (StoreID) REFERENCES Stores(ID)
 );
