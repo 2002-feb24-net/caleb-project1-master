@@ -13,16 +13,16 @@ using System.Threading.Tasks;
 namespace BookStore.MSTest
 {
     [TestClass]
-    class OrderRepoTest
+    public class OrderRepoTest
     {
-        public void TestSetup(Infrastructure.BookStoreContext context)
+        public void TestSetup(BookStoreContext context)
         {
             OrdersDAL Repo;
-            StoresDAL LocDal;
+            StoresDAL StoreDAL;
             CustomersDAL CustDal;
 
             Repo = new OrdersDAL(context);
-            LocDal = new StoresDAL(context);
+            StoreDAL = new StoresDAL(context);
             CustDal = new CustomersDAL(context);
             var cust = new Customers
             {
@@ -32,10 +32,10 @@ namespace BookStore.MSTest
                 FirstName = "fsample",
                 LastName = "lsample"
             };
-            var loc = new Stores
+            var store = new Stores
             {
                 Id = 1,
-                Address = "tacoma"
+                Address = "123 test blvd"
             };
             var prod = new Products
             {
@@ -51,7 +51,7 @@ namespace BookStore.MSTest
                 Quantity = 10000
             };
             CustDal.Add(cust);
-            LocDal.Add(loc);
+            StoreDAL.Add(store);
             context.Products.Add(prod);
             context.Inventory.Add(inventory);
             context.SaveChanges();
@@ -61,26 +61,26 @@ namespace BookStore.MSTest
         public async Task TestOrdtAdd()
         {
             OrdersDAL Repo;
-            StoresDAL LocDal;
+            StoresDAL StoreDAL;
             var conn = new SqliteConnection("DataSource=:memory:");
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
+                var options = new DbContextOptionsBuilder<BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
 
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
 
                 }
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     TestSetup(context);
                     Debug.WriteLine(context.Customers.ToList().Count);
                     Repo = new OrdersDAL(context);
-                    LocDal = new StoresDAL(context);
+                    StoreDAL = new StoresDAL(context);
                     var custs = await Repo.GetOrds();
                     int initial_count = custs.ToList().Count;
                     Orders ord1 = new Orders
@@ -107,23 +107,23 @@ namespace BookStore.MSTest
         public void TestOrdEdit()
         {
             OrdersDAL Repo;
-            StoresDAL LocDal;
+            StoresDAL StoreDAL;
             var conn = new SqliteConnection("DataSource=:memory:");
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
+                var options = new DbContextOptionsBuilder<BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
-                    LocDal = new StoresDAL(context);
+                    StoreDAL = new StoresDAL(context);
                     var ord = new Orders
                     {
                         CustomerId = 1,
@@ -149,7 +149,7 @@ namespace BookStore.MSTest
         public async Task TestOrdDelete()
         {
             OrdersDAL Repo;
-            StoresDAL LocDal;
+            StoresDAL StoreDAL;
             var conn = new SqliteConnection("DataSource=:memory:");
             conn.Open();
             try
@@ -165,7 +165,7 @@ namespace BookStore.MSTest
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
-                    LocDal = new StoresDAL(context);
+                    StoreDAL = new StoresDAL(context);
                     var custs = await Repo.GetOrds();
                     int initialCount = custs.ToList().Count;
                     var newOrd = new Orders
@@ -192,23 +192,23 @@ namespace BookStore.MSTest
         public async Task TestOrdDeleteEmpty()
         {
             OrdersDAL Repo;
-            StoresDAL LocDal;
+            StoresDAL StoreDAL;
             var conn = new SqliteConnection("DataSource=:memory:");
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
+                var options = new DbContextOptionsBuilder<BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
-                    LocDal = new StoresDAL(context);
+                    StoreDAL = new StoresDAL(context);
                     var newOrd = new Orders
                     {
                         CustomerId = 1,
@@ -244,23 +244,23 @@ namespace BookStore.MSTest
         public void TestOrdTotalUpdate()
         {
             OrdersDAL Repo;
-            StoresDAL LocDal;
+            StoresDAL StoreDAL;
             var conn = new SqliteConnection("DataSource=:memory:");
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
+                var options = new DbContextOptionsBuilder<BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
-                    LocDal = new StoresDAL(context);
+                    StoreDAL = new StoresDAL(context);
                     var newCust = new Orders
                     {
                         CustomerId = 1,
@@ -293,30 +293,30 @@ namespace BookStore.MSTest
         public void TestInvalidQty(int qty)
         {
             OrdersDAL Repo;
-            StoresDAL LocDal;
+            StoresDAL StoreDAL;
             var conn = new SqliteConnection("DataSource=:memory:");
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
+                var options = new DbContextOptionsBuilder<BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
-                    LocDal = new StoresDAL(context);
+                    StoreDAL = new StoresDAL(context);
                     var orderItem = new OrderItem
                     {
                         OrderId = 1,
                         InventoryId = 5,
                         Quantity = qty,
                     };
-                    Assert.IsFalse(orderItem.ValidateQuantity(LocDal.GetQty(5)));
+                    Assert.IsFalse(orderItem.ValidateQuantity(StoreDAL.GetQty(5)));
                 }
             }
             finally
@@ -331,30 +331,30 @@ namespace BookStore.MSTest
         public void TestValidQty(int qty)
         {
             OrdersDAL Repo;
-            StoresDAL LocDal;
+            StoresDAL StoreDAL;
             var conn = new SqliteConnection("DataSource=:memory:");
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
+                var options = new DbContextOptionsBuilder<BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
-                    LocDal = new StoresDAL(context);
+                    StoreDAL = new StoresDAL(context);
                     var orderItem = new OrderItem
                     {
                         OrderId = 1,
                         InventoryId = 5,
                         Quantity = qty
                     };
-                    Assert.IsTrue(orderItem.ValidateQuantity(LocDal.GetQty(5)));
+                    Assert.IsTrue(orderItem.ValidateQuantity(StoreDAL.GetQty(5)));
                 }
             }
             finally

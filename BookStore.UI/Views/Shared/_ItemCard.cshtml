@@ -17,12 +17,13 @@
         .display {
             display: flex;
             flex-direction: row;
+            justify-content: space-between;
         }
 
     </style>
 </head>
 <div class="item-card">
-    <img src="~/Assets/Images/bookabouteverything.png" alt="Image absent" onerror="this.onerror=null;width="200" height="150" style="background:transparent"/>
+    <img src="~/Assets/Images/@Model.Product.ImageUrl" alt="Book image" onerror="this.onerror=null;" this.src='https://pngimage.net/wp-content/uploads/2020/02/open-book-png-transparent-.png' width="150" height="150" style="background:transparent" />
     <dl class="row">
         <div class="display name">
             <dt>
@@ -40,6 +41,13 @@
                 @Html.DisplayFor(model => model.Quantity)
             </dd>
         </div>
-    </dl>
+        <div class="display price">
+            <dt>
+                @Html.DisplayNameFor(model => model.Product.Price)
+            </dt>
+            <dd>
+                $@Html.DisplayFor(model => model.Product.Price)
+            </dd>
+        </div>
 </div>
 

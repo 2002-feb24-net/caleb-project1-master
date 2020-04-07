@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace BookStore.MSTest
 {
     [TestClass]
-    public class RepositoryTest
+    public class ProductRepoTest
     {
         [TestInitialize]
         public void TestSetup()
@@ -21,10 +21,10 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
+                var options = new DbContextOptionsBuilder<BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
@@ -42,14 +42,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
+                var options = new DbContextOptionsBuilder<BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     Repo = new CustomersDAL(context);
                     var custs = await Repo.GetCusts();
@@ -75,13 +75,13 @@ namespace BookStore.MSTest
                         FirstName = "fsm",
                         LastName = "lsm"
                     };
-                    int x = Repo.Add(cust1); int y = Repo.Add(cust2); int z = Repo.Add(cust3);
+                    int a = Repo.Add(cust1); int b = Repo.Add(cust2); int c = Repo.Add(cust3);
                     custs = await Repo.GetCusts();
                     int final_count = custs.ToList().Count;
                     Assert.IsTrue(final_count == (initial_count + 3));
-                    Repo.Remove(x);
-                    Repo.Remove(y);
-                    Repo.Remove(z);
+                    Repo.Remove(a);
+                    Repo.Remove(b);
+                    Repo.Remove(c);
                 }
             }
             finally
@@ -97,14 +97,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
+                var options = new DbContextOptionsBuilder<BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     Repo = new CustomersDAL(context);
                     Customers cust1 = new Customers
@@ -138,14 +138,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
+                var options = new DbContextOptionsBuilder<BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new Infrastructure.BookStoreContext(options))
+                using (var context = new BookStoreContext(options))
                 {
                     Repo = new CustomersDAL(context);
 

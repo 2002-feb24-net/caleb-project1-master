@@ -12,6 +12,7 @@ using BookStore.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using BookStore.Domain;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace BookStore.UI
 {
@@ -24,10 +25,10 @@ namespace BookStore.UI
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
-            if (env.IsDevelopment())
+            /*if (env.IsDevelopment())
             {
                 builder.AddUserSecrets<Startup>();
-            }
+            }*/
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
@@ -45,7 +46,7 @@ namespace BookStore.UI
             services.AddLogging(logger =>
             {
                 logger.AddConfiguration(Configuration.GetSection("Logging"));
-               // logger.AddAzureWebAppDiagnostics();
+                logger.AddAzureWebAppDiagnostics();
                 logger.AddConsole();
                 logger.AddDebug();
             });
@@ -75,7 +76,9 @@ namespace BookStore.UI
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "default", 
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

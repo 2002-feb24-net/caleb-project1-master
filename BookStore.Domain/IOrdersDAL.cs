@@ -45,7 +45,7 @@ namespace BookStore.Domain
         /// Adds order item to database 
         /// </summary>
         /// <param name="OrderId">order id</param>
-        /// <param name="ProductId">product id</param>
+        /// <param name="InventoryId">inventory id</param>
         /// <param name="Quantity">quantity </param>
         void AddOrderItem(OrderItem item);
 

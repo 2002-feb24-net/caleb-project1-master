@@ -16,22 +16,22 @@ namespace BookStore.UI.Controllers
     {
         private readonly IOrdersDAL _context;
         private readonly ICustomersDAL _custContext;
-        private readonly IStoresDAL _locContext;
+        private readonly IStoresDAL _storeContext;
         private readonly ILogger<OrdersController> logger;
 
         public OrdersController(IOrdersDAL oDAL, ICustomersDAL cDAL, IStoresDAL lDAL, ILogger<OrdersController> logger)
         {
             _context = oDAL;
             _custContext = cDAL;
-            _locContext = lDAL;
+            _storeContext = lDAL;
             this.logger = logger;
         }
 
-        public async Task<IActionResult> SearchLocOrders(string locName)
+        public async Task<IActionResult> SearchStoreOrders(string storeAddress)
         {
-            TempData["LocOrds"] = locName;
-            logger.LogInformation($"Finding orders for location: {1}", locName);
-            return View("Index", await _context.GetOrders(1, locName));
+            TempData["LocOrds"] = storeAddress;
+            logger.LogInformation($"Searching orders for store {1}", storeAddress);
+            return View("Index", await _context.GetOrders(1, storeAddress));
         }
         public async Task<IActionResult> SearchCustOrders(string firstName, string lastName)
         {
@@ -44,8 +44,8 @@ namespace BookStore.UI.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var wheyMenContext = await _context.GetOrds();
-            return View(wheyMenContext.ToList());
+            var bookstoreContext = await _context.GetOrds();
+            return View(bookstoreContext.ToList());
         }
         public async Task<IActionResult> SortOrders(string SortOption)
         {
@@ -84,18 +84,18 @@ namespace BookStore.UI.Controllers
         }
 
         /// <summary>
-        /// Gets inventory for a location to display when adding an order
+        /// Get the inventory of a store to show when adding an order
         /// </summary>
         /// <param name="storeID"></param>
         /// <returns></returns>
-        private CreateOrderViewModel InitCOVM(int storeID)
+        private CreateOrderViewModel StoreInventoryDisplay(int storeID)
         {
             TempData["StoreID"] = storeID;
             var inventoryItemModel = new CreateOrderViewModel
             {
-                Inventory = _locContext.GetInventory(storeID)
+                Inventory = _storeContext.GetInventory(storeID)
             };
-            ViewData["ProductID"] = new SelectList(_locContext.GetInventory(storeID), "Id", "P.Name");
+            ViewData["ProductID"] = new SelectList(_storeContext.GetInventory(storeID), "Id", "P.Name");
             return inventoryItemModel;
         }
 
@@ -106,29 +106,29 @@ namespace BookStore.UI.Controllers
             TempData["StoreID"] = storeID;
             int orderID = Convert.ToInt32(TempData["OrderID"]);
             TempData["OrderID"] = orderID;
-            //validate current item's quantity
-            if (ModelState.IsValid && item.ValidateQuantity(_locContext.GetQty(item.InventoryId)))
+            //validate current (order)item's inventory quantity
+            if (ModelState.IsValid && item.ValidateQuantity(_storeContext.GetQty(item.InventoryId)))
             {
-                //set old failed quantity to current entered quantity
+                //set the old failed quantity to current entered quantity
                 //update product's quantity then set the corresponding order id 
-                _locContext.UpdateInventory(item.InventoryId, item.Quantity);
+                _storeContext.UpdateInventory(item.InventoryId, item.Quantity);
                 item.OrderId = orderID;
                 _context.AddOrderItem(item);
-                logger.LogInformation($"Adding item to {1}", item.OrderId);
+                logger.LogInformation($"Adding item to order {1}", item.OrderId);
                 return true;
             }
             ModelState.AddModelError("QuantityError", "Quantity input invalid, reattempt.");
             return false;
         }
 
-        public IActionResult AddMore([Bind("Id", "OrderId", "ProductId", "Quantity")] OrderItem item)
+        public IActionResult AddMore([Bind("Id", "OrderId", "Quantity", "InventoryId")] OrderItem item)
         {
             if (!AddOrderItem(item))
             {
                 TempData["ItemAddError"] = true;
             }
             int storeId = Convert.ToInt32(TempData["StoreID"]);
-            InitCOVM(storeId);
+            StoreInventoryDisplay(storeId);
             return RedirectToAction("CreateOrderItem");
         }
 
@@ -141,11 +141,11 @@ namespace BookStore.UI.Controllers
             int storeID = Convert.ToInt32(TempData["StoreID"]);
             TempData["StoreID"] = storeID;
 
-            return View(InitCOVM(storeID));
+            return View(StoreInventoryDisplay(storeID));
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrderItem([Bind("Id", "OrderId", "ProductId", "Quantity")] OrderItem item)
+        public IActionResult CreateOrderItem([Bind("Id", "OrderId", "Quantity", "InventoryId")] OrderItem item)
         {
 
             if (AddOrderItem(item))
@@ -154,7 +154,7 @@ namespace BookStore.UI.Controllers
             }//else error
             ModelState.AddModelError("QuantityError", "Quantity input invalid, reattempt.");
             int storeID = Convert.ToInt32(TempData["StoreID"]);
-            return View(InitCOVM(storeID));
+            return View(StoreInventoryDisplay(storeID));
         }
 
         // GET: Orders/Details/5
@@ -177,7 +177,7 @@ namespace BookStore.UI.Controllers
         {
             if (TempData["VerificationError"] != null && (bool)TempData["VerificationError"] == true)
             {
-                ModelState.AddModelError("VerificationError", "Invalid username/password combination, please try again.");
+                ModelState.AddModelError("VerificationError", "Invalid username or password, try again.");
             }
             logger.LogInformation("Creating order");
             ViewData["StoreId"] = new SelectList(_context.GetStores(), "Id", "Address");
@@ -189,25 +189,25 @@ namespace BookStore.UI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Username,Password,Id,StoreId,CustomerId")] OrderViewModel order)
+        public IActionResult Create([Bind("Id,CustomerId,StoreId,Username,Password")] OrderViewModel order)
         {
             string Username = order.Username, Password = order.Password;
             if (ModelState.IsValid)
             {
-                int cid;
+                int custid;
                 var cst = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
-                if (Password == (_custContext.VerifyCustomer(Username, out cid)))
+                if (Password == (_custContext.VerifyCustomer(Username, out custid)))
                 {
                     var new_order = new Orders
                     {
                         StoreId = order.StoreId,
-                        CustomerId = cid,
+                        CustomerId = custid,
                         Total = 0,
                         OrderTime = TimeZoneInfo.ConvertTime(DateTime.Now, cst)
                     };
                     TempData["OrderID"] = _context.Add(new_order);
                     TempData["StoreID"] = order.StoreId;
-                    logger.LogInformation("Order created.");
+                    logger.LogInformation("Order created");
                     return RedirectToAction("CreateOrderItem");
                 }
                 else
@@ -243,7 +243,7 @@ namespace BookStore.UI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductId,CustomerId,StoreId,Price,OrderTime,Quantity")] Orders order)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerId,StoreId,Total,OrderTime")] Orders order)
         {
             if (id != order.Id)
             {
@@ -278,7 +278,7 @@ namespace BookStore.UI.Controllers
         // GET: Orders/Delete/5
         public IActionResult Delete(int? id)
         {
-            logger.LogInformation($"Attempting to delete order {1}", id);
+            logger.LogInformation($"Order {1} deletion attempt", id);
             if (id == null)
             {
                 return NotFound();
@@ -301,7 +301,7 @@ namespace BookStore.UI.Controllers
         {
             var order = _context.FindByID(id);
             _context.Remove(order.Id);
-            logger.LogInformation($"Successfully removed order {1}", id);
+            logger.LogInformation($"Order {1} successfully removed.", id);
             return RedirectToAction(nameof(Index));
         }
 

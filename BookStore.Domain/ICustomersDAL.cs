@@ -47,7 +47,7 @@ namespace BookStore.Domain
         /// <returns></returns>
         IEnumerable<Customers> SearchCust(int mode = 0, params string[] search_param);
 
-        //Retrieves actual pwd of customer returns id of matching username
+        //Retrieves actual password of the customer and returns id of matching username
         /// <summary>
         /// Verifies existing username and assigns id if found
         /// </summary>

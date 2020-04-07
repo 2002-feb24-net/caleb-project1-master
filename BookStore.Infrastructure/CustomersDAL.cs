@@ -42,7 +42,7 @@ namespace BookStore.Infrastructure
         }
 
         /// <summary>
-        /// Adds a customer to database
+        /// Adds customer to the database
         /// </summary>
         /// <param name="cust"></param>
         public int Add(Customers cust)
@@ -54,7 +54,7 @@ namespace BookStore.Infrastructure
         }
 
         /// <summary>
-        /// Sets customer's state to edited
+        /// Sets customer state to edited
         /// </summary>
         /// <param name="cust"></param>
         public void Edit(Customers cust)
@@ -66,7 +66,7 @@ namespace BookStore.Infrastructure
             context.SaveChanges();
         }
 
-        //Searches customers by either name or username
+        //Search for customers by name or username
         //modes:
         //  1: Search by name
         //  2: username
@@ -87,8 +87,8 @@ namespace BookStore.Infrastructure
             }
         }
 
-        //assigns id of verified customer -1 if does not exist/invalid etc.
-        //returns actual pwd of customer
+        //Customer to be verified gets id of -1 if username dne or is invalid
+        //returns the customer's password
         public string VerifyCustomer(string username, out int id)
         {
             var cust = context.Customers.FirstOrDefault(cust => cust.Username == username);

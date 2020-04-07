@@ -20,6 +20,7 @@ namespace BookStore.UI.Controllers
 
         public IActionResult Index()
         {
+            TempData.Clear();
             return View();
         }
 

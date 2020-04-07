@@ -27,6 +27,7 @@ namespace BookStore.UI.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
+            TempData.Clear();
             return View(await _context.GetCusts());
         }
 
@@ -50,10 +51,11 @@ namespace BookStore.UI.Controllers
         // GET: Customers/Create
         public IActionResult Create()
         {
+            /*
             if (TempData["CustAddError"] != null && (bool)TempData["CustAddError"] == true)
             {
                 ModelState.AddModelError("CustAddError", "Creating the customer failed change username/email.");
-            }
+            }*/
             return View();
         }
 
@@ -72,13 +74,13 @@ namespace BookStore.UI.Controllers
                 }
                 catch (Exception)
                 {
-                    TempData["CustAddError"] = true;
+                    ModelState.AddModelError("CustAddError", "Customer creation failed due to invalid username/password.");
                     return View(customer);
                 }
-                logger.LogInformation($"Successfully created customer");
+                logger.LogInformation($"Customer successfully created.");
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return RedirectToAction("Create", customer);
         }
 
         // GET: Customers/Edit/5
@@ -104,8 +106,8 @@ namespace BookStore.UI.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind("Id,Username,Password,FirstName,LastName")] Customers customer)
         {
-
-            if (_context.FindByID(id).Username != customer.Username) //username cant be updated
+            //username must remain unique
+            if (_context.FindByID(id).Username != customer.Username)
             {
                 return NotFound();
             }
@@ -120,7 +122,7 @@ namespace BookStore.UI.Controllers
                 {
                     logger.LogError("Customer edit failed.");
                     TempData["EditFailed"] = true;
-                    ModelState.AddModelError("EditFailed", "Editing customer info failed, please reattempt later.");
+                    ModelState.AddModelError("EditFailed", "Editing customer info failed, please reattempt at another time.");
                     return View(customer);
                 }
                 logger.LogInformation("Customer info successfully edited.");

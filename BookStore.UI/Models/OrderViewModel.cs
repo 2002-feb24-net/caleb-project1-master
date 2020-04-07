@@ -15,62 +15,64 @@ namespace BookStore.UI.Models
             OrderItem = new HashSet<OrderItem>();
         }
 
+        /// <summary>
+        /// Username
+        /// </summary>
         [Required(ErrorMessage = "Username is required")]
-        [MaxLength(30, ErrorMessage = "Maximum username length is 30")]
-        [MinLength(3, ErrorMessage = "Minimum username length is 3")]
+        [MinLength(1, ErrorMessage = "Minimum username length is 1")]
+        [MaxLength(50, ErrorMessage = "Maximum username length is 50")]
         public string Username { get; set; }
 
         /// <summary>
-        /// Password, between 3 and 100 characters
+        /// Password
         /// </summary>
         [Display(Name = "Password")]
-        [MinLength(3, ErrorMessage = "Minium password length is 3")]
-        [MaxLength(100, ErrorMessage = "Maximum password length is 100")]
+        [MinLength(1, ErrorMessage = "Minium password length is 1")]
+        [MaxLength(50, ErrorMessage = "Maximum password length is 50")]
         [ScaffoldColumn(false)]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
 
+        /// <summary>
+        /// Id of order
+        /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// Customer which placed the order
+        /// Customer that placed the order
         /// </summary>
-        [Required(ErrorMessage = "Customer name is required")]
+        [Required(ErrorMessage = "Customer is required")]
         public int CustomerId { get; set; }
 
         /// <summary>
-        /// Location order was placed to 
+        /// Store to which order was placed
         /// </summary>
-        [Required(ErrorMessage = "Location name is required")]
+        [Required(ErrorMessage = "Store is required")]
         public int StoreId { get; set; }
 
         /// <summary>
-        /// Total value of the order
+        /// Total order price
         /// </summary>
-        public decimal? Price { get; set; }
+        public decimal? Total { get; set; }
 
         /// <summary>
-        /// Time order wwas created client side
+        /// Timestamp of order creation
         /// </summary>
         public DateTime OrderTime { get; set; }
 
         /// <summary>
-        /// nav prop to ordered from location
+        /// Navigation property to store customer is ordering from
         /// </summary>
         public virtual Stores Store { get; set; }
+
         /// <summary>
-        /// Navigation property to ordering customer
+        /// Navigation property to customer making the order
         /// </summary>
         public virtual Customers Customer { get; set; }
 
-  /*      /// <summary>
-        /// Orders belonging to this customer
-        /// </summary>
-        public virtual ICollection<Orders> Orders { get; set; }     */
-
         /// <summary>
-        /// Items belonging to this order
+        /// OrderItems associated with this order
         /// </summary>
         public virtual ICollection<OrderItem> OrderItem { get; set; }
     }

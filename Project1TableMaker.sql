@@ -55,4 +55,7 @@ PRIMARY KEY (ID),
 FOREIGN KEY (OrderID) REFERENCES Orders(ID),
 FOREIGN KEY (InventoryID) REFERENCES Inventory(ID)
 );
+
+--insert into tables
+
 SELECT * FROM OrderItem;

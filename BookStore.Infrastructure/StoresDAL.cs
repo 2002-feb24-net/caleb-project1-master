@@ -23,11 +23,11 @@ namespace BookStore.Infrastructure
 
         public IEnumerable<Stores> GetStores()
         {
-            return context.Stores.Include("P.P");
+            return context.Stores.Include("Inventory.Product");
         }
 
         /// <summary>
-        /// Adds a customer to database
+        /// Adds customer to the database
         /// </summary>
         /// <param name="cust"></param>
         public void Add(Stores l)
@@ -36,7 +36,7 @@ namespace BookStore.Infrastructure
         }
 
         /// <summary>
-        /// Sets location's state to edited
+        /// Sets store state to edited
         /// </summary>
         /// <param name="cust"></param>
         public void Edit(Stores l)
@@ -59,7 +59,7 @@ namespace BookStore.Infrastructure
         public List<Inventory> GetInventory(int id)
         {
             var listInventoryModel = context.Inventory
-                                            .Include("P")
+                                            .Include("Inventory")
                                             .Where(i => i.StoreId == id)
                                             .ToList();
 

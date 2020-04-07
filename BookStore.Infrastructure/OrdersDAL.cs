@@ -33,8 +33,8 @@ namespace BookStore.Infrastructure
             var res = context.Orders
                     .Include(o => o.Customer)
                     .Include(o => o.Store)
-                    .Include("Products.P")
-                    .Include("Products.P.P")
+                    .Include("OrderItem.Inventory")
+                    .Include("OrderItem.Inventory.Product")
                     .FirstOrDefault(m => m.Id == id);
             context.Entry(res).Reload();
             return res;
@@ -87,21 +87,23 @@ namespace BookStore.Infrastructure
             context.SaveChanges();
         }
 
-        //Returns price of added item
+        /*
+        //Returns the price of the added (order)item
         public void AddProduct(Products item)
         {
             context.Products.Add(item);
             context.SaveChanges();
         }
+        */
 
-        //Returns price of added item
+        //Returns the price of the added (order)item
         public void AddOrderItem(OrderItem item)
         {
             context.OrderItem.Add(item);
             context.SaveChanges();
         }
 
-        //Searches orders by given param, param is checked against Order columns according to mode
+        //Searches orders by given param derived from order, param is checked against Order columns according to mode
         //Mode Codes:
         //  1: Get orders by location
         //  2: By customer
@@ -127,9 +129,9 @@ namespace BookStore.Infrastructure
                     break;
             }
             return await orderList
-                        .Include("Products")
-                        .Include("Products.P")
-                        .Include("Products.P.P")
+                        .Include("OrderItem")
+                        .Include("OrderItem.Inventory")
+                        .Include("OrderItem.Inventory.Product")
                         .ToListAsync();
         }
     }
