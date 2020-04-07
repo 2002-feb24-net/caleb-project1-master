@@ -25,10 +25,10 @@ namespace BookStore.UI
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
-            /*if (env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 builder.AddUserSecrets<Startup>();
-            }*/
+            }
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
@@ -62,7 +62,7 @@ namespace BookStore.UI
             }
             else
             {
-                app.UseExceptionHandler("Home/Error");
+                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
