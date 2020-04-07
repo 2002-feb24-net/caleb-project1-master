@@ -55,6 +55,8 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
+    zipAfterPublish: true
+  displayName: dotnet publish + zip
 
 # built in task best way to deploy to azure app service
 # this task looks for a zip file and deploys it to your app service
