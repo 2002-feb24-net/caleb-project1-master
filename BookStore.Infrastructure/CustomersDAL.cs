@@ -42,11 +42,12 @@ namespace BookStore.Infrastructure
         }
 
         /// <summary>
-        /// Adds customer to the database
+        /// Adds customer to the database - gets num of customers and adds one to allow for adding multiple customers
         /// </summary>
         /// <param name="cust"></param>
         public int Add(Customers cust)
         {
+            cust.Id = context.Customers.Count() + 1;
             context.Customers.Add(cust);
             context.SaveChanges();
             context.Entry(cust).Reload();
@@ -75,7 +76,7 @@ namespace BookStore.Infrastructure
         {
             if (mode == 1)
             {
-                return context.Customers.Where(cust => cust.FirstName == search_param[0] && cust.LastName == search_param[1]);
+                return context.Customers.Where(cust => cust.FirstName == search_param[0] || cust.LastName == search_param[1]);
             }
             else if (mode == 2)
             {

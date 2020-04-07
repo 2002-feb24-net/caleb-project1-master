@@ -10,9 +10,9 @@
 <div id="function-container">
     <div id="function-buttons">
         <div id="function-buttons-center">
-            <button id="search-cust-orders">Search Customer Orders</button>
-            <button id="search-loc-orders">Search Store Orders</button>
-            <button>
+            <button id="search-cust-orders" style="padding:5px;margin:5px;background-color:#F0F7EE;">Search Customer Orders</button>
+            <button id="search-loc-orders" style="padding:5px;margin:5px;background-color:#F0F7EE;">Search Store Orders</button>
+            <button style="padding:5px;margin:5px;background-color:#F0F7EE;">
                 <a asp-action="Create" class="button">Create an Order</a>
             </button>
             
@@ -25,7 +25,7 @@
                         <option value="Most Expensive">Most Expensive</option>
                         <option value="Least Expensive">Least Expensive</option>
                     </select>
-                    <input asp-action="SortOrders" name="SortOption" class="sort-orders" type="submit" value="Sort" id="sort-btn"/>
+                    <input asp-action="SortOrders" name="SortOption" style="padding:5px;margin:5px;background-color:#F0F7EE;" class="sort-orders" type="submit" value="Sort" id="sort-btn"/>
                 </div>
             }
         </div>
@@ -33,7 +33,7 @@
     <div id="function-inputs">
         @using (Html.BeginForm("SearchLocOrders"))
         {
-            <input type="text" class="search-loc" style="display:none;" name="locName" placeholder="Location Name" />
+            <input type="text" class="search-loc" style="        display: none;" name="locName" placeholder="Location Name" />
 
             <input asp-action="SearchLocOrders" class="search-loc" type="submit" value="Search" style="display:none;" id="search-loc-begin" />
         }

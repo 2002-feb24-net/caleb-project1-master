@@ -66,11 +66,12 @@ namespace BookStore.Infrastructure
         }
 
         /// <summary>
-        /// Adds an order to database
+        /// Adds an order to database with counting order id to ensure no duplicates
         /// </summary>
         /// <param name="cust"></param>
         public int Add(Orders o)
         {
+            o.Id = context.Orders.Count() + 1;
             context.Orders.Add(o);
             context.SaveChanges();
             context.Entry(o).Reload();
@@ -86,15 +87,6 @@ namespace BookStore.Infrastructure
             context.Entry(o).State = EntityState.Modified;
             context.SaveChanges();
         }
-
-        /*
-        //Returns the price of the added (order)item
-        public void AddProduct(Products item)
-        {
-            context.Products.Add(item);
-            context.SaveChanges();
-        }
-        */
 
         //Returns the price of the added (order)item
         public void AddOrderItem(OrderItem item)
@@ -119,7 +111,7 @@ namespace BookStore.Infrastructure
                     break;
                 case 2:
                     orderList = orderList
-                    .Where(o => o.Customer.FirstName == search_param[0] && o.Customer.LastName == search_param[1]);
+                    .Where(o => o.Customer.FirstName == search_param[0] || o.Customer.LastName == search_param[1]);
                     break;
                 case 3:
                     orderList = orderList

@@ -27,7 +27,7 @@ namespace BookStore.UI.Controllers
             this.logger = logger;
         }
 
-        public async Task<IActionResult> SearchStoreOrders(string storeAddress)
+        public async Task<IActionResult> SearchLocOrders(string storeAddress)
         {
             TempData["LocOrds"] = storeAddress;
             logger.LogInformation($"Searching orders for store {1}", storeAddress);

@@ -15,21 +15,18 @@ namespace BookStore.Domain.Model
         [Display(Name = "Inventory Item ID")]
         [Range(0, int.MaxValue)]
         public int Id { get; set; }
-
         /// <summary>
         /// Id of product in inventory
         /// </summary>
         [Display(Name = "Product ID")]
         [Range(0, int.MaxValue)]
         public int ProductId { get; set; }
-
         /// <summary>
         /// Id of store in inventory
         /// </summary>
         [Display(Name = "Store ID")]
         [Range(0, int.MaxValue)]
         public int StoreId { get; set; }
-
         /// <summary>
         /// Quantity of the this item in inventory
         /// </summary>
@@ -41,12 +38,10 @@ namespace BookStore.Domain.Model
         /// Navigation property to inventory's associated product
         /// </summary>
         public virtual Products Product { get; set; }
-
         /// <summary>
         /// Navigation property to inventory's associated store
         /// </summary>
         public virtual Stores Store { get; set; }
-
         /// <summary>
         /// order items referencing this inventory item
         /// </summary>

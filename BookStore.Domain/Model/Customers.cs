@@ -10,14 +10,12 @@ namespace BookStore.Domain.Model
         {
             Orders = new HashSet<Orders>();
         }
-
         /// <summary>
         /// Customer ID
         /// </summary>
         [Display(Name = "Customer ID")]
         [Key]
         public int Id { get; set; }
-
         /// <summary>
         /// Customer user name
         /// </summary>
@@ -25,7 +23,6 @@ namespace BookStore.Domain.Model
         [MinLength(1, ErrorMessage = "Minimum username length is 1.")]
         [MaxLength(50, ErrorMessage = "Maximum username length is 50.")]
         public string Username { get; set; }
-
         /// <summary>
         /// Customer password
         /// </summary>
@@ -36,7 +33,6 @@ namespace BookStore.Domain.Model
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
-
         /// <summary>
         /// Customer first name
         /// </summary>
@@ -44,7 +40,6 @@ namespace BookStore.Domain.Model
         [Required(ErrorMessage = "First name is required.")]
         [MaxLength(200, ErrorMessage = "Maximum name length is 200.")]
         public string FirstName { get; set; }
-
         /// <summary>
         /// Customer last name
         /// </summary>

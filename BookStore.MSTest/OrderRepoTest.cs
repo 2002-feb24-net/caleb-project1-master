@@ -15,7 +15,7 @@ namespace BookStore.MSTest
     [TestClass]
     public class OrderRepoTest
     {
-        public void TestSetup(BookStoreContext context)
+        public void TestSetup(Infrastructure.BookStoreContext context)
         {
             OrdersDAL Repo;
             StoresDAL StoreDAL;
@@ -66,16 +66,16 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
 
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
 
                 }
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     TestSetup(context);
                     Debug.WriteLine(context.Customers.ToList().Count);
@@ -112,14 +112,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
@@ -197,14 +197,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
@@ -249,14 +249,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
@@ -298,14 +298,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
@@ -336,14 +336,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);

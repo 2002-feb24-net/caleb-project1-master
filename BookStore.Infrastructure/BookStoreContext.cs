@@ -20,7 +20,6 @@ namespace BookStore.Infrastructure
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Products> Products { get; set; }
         public virtual DbSet<Stores> Stores { get; set; }
-
         /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -30,7 +29,6 @@ namespace BookStore.Infrastructure
             }
         }
         */
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customers>(entity =>
@@ -61,12 +59,12 @@ namespace BookStore.Infrastructure
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Inventory)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__Inventory__Produ__113584D1");
+                    .HasConstraintName("FK__Inventory__Produ__0B47A151");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.Inventory)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__Inventory__Store__1229A90A");
+                    .HasConstraintName("FK__Inventory__Store__0C3BC58A");
             });
 
             modelBuilder.Entity<OrderItem>(entity =>
@@ -79,15 +77,22 @@ namespace BookStore.Infrastructure
 
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
 
+                entity.Property(e => e.ProductId).HasColumnName("ProductID");
+
                 entity.HasOne(d => d.Inventory)
                     .WithMany(p => p.OrderItem)
                     .HasForeignKey(d => d.InventoryId)
-                    .HasConstraintName("FK__OrderItem__Inven__15FA39EE");
+                    .HasConstraintName("FK__OrderItem__Inven__11007AA7");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderItem)
                     .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK__OrderItem__Order__150615B5");
+                    .HasConstraintName("FK__OrderItem__Order__0F183235");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.OrderItem)
+                    .HasForeignKey(d => d.ProductId)
+                    .HasConstraintName("FK__OrderItem__Produ__100C566E");
             });
 
             modelBuilder.Entity<Orders>(entity =>
@@ -107,12 +112,12 @@ namespace BookStore.Infrastructure
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__Orders__Customer__0D64F3ED");
+                    .HasConstraintName("FK__Orders__Customer__0777106D");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__Orders__StoreID__0E591826");
+                    .HasConstraintName("FK__Orders__StoreID__086B34A6");
             });
 
             modelBuilder.Entity<Products>(entity =>

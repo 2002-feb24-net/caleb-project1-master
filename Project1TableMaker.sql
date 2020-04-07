@@ -50,9 +50,11 @@ CREATE TABLE OrderItem (
 ID int,
 OrderID int,
 Quantity int,
+ProductID int,
 InventoryID int,
 PRIMARY KEY (ID),
 FOREIGN KEY (OrderID) REFERENCES Orders(ID),
+FOREIGN KEY (ProductID) REFERENCES Products(ID),
 FOREIGN KEY (InventoryID) REFERENCES Inventory(ID)
 );
 
@@ -84,8 +86,8 @@ VALUES (1, 1, 1, 111),
        (5, 2, 2, 222),
        (6, 3, 2, 233);
 	   
-INSERT INTO OrderItem (ID, OrderID, Quantity, InventoryID)
-VALUES (1, 1, 1, 1),
-       (2, 2, 1, 3),
-       (3, 3, 1, 5);
-SELECT * FROM Customers;
+INSERT INTO OrderItem (ID, OrderID, Quantity, ProductID, InventoryID)
+VALUES (1, 1, 1, 1, 1),
+       (2, 2, 1, 3, 3),
+       (3, 3, 1, 2, 5);
+SELECT * FROM OrderItem;

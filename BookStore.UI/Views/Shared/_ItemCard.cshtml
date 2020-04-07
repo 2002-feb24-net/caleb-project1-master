@@ -5,7 +5,7 @@
             margin-right: 1vw;
         }
         .item-card {
-            background-color: black;
+            background-color: #F0F7EE;
             border-radius: 1vw;
             padding: 2vw;
             margin: 3vw;
@@ -25,29 +25,23 @@
 <div class="item-card">
     <img src="~/Assets/Images/@Model.Product.ImageUrl" alt="Book image" onerror="this.onerror=null;" this.src='https://pngimage.net/wp-content/uploads/2020/02/open-book-png-transparent-.png' width="150" height="150" style="background:transparent" />
     <dl class="row">
-        <div class="display name">
             <dt>
                 @Html.DisplayNameFor(model => model.Product.Name)
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.Product.Name)
             </dd>
-        </div>
-        <div class="display qty">
             <dt>
                 @Html.DisplayNameFor(model => model.Quantity)
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.Quantity)
             </dd>
-        </div>
-        <div class="display price">
             <dt>
                 @Html.DisplayNameFor(model => model.Product.Price)
             </dt>
             <dd>
                 $@Html.DisplayFor(model => model.Product.Price)
             </dd>
-        </div>
 </div>
 

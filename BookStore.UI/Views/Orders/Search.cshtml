@@ -1,0 +1,75 @@
+﻿@model IEnumerable<BookStore.Domain.Model.Orders>
+@{
+    ViewData["Title"] = "Search";
+}
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+    </head>
+
+<h1>Store Orders</h1>
+<div id="function-continer">
+    <div id="function-buttons">
+        <div id="function-buttons-center">
+            <button id="search-store-ords">Search Stores</button>
+            <button>
+                <a asp-action="Create">Create New</a>
+            </button>
+        </div>
+        </div>
+        <div id="function-inputs">
+            <input type="text" id="search-input-address" style="display:none;" name="SearchAddress" placeholder="First Name" />
+            <button>
+                <a asp-action="Search" style="display:none;" id="search-begin">Begin Search</a>
+            </button>
+
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            @section scripts{
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#search-store-ords').click(function () {
+                            $('#search-input-address').show(100);
+                        });
+                    });
+                </script>
+            }
+        </div>
+    </div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Store.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderItem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Store.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderItem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderItem)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

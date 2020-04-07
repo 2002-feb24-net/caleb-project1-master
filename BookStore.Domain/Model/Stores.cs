@@ -16,7 +16,6 @@ namespace BookStore.Domain.Model
         /// Stores's Id, primary key
         /// </summary>
         public int Id { get; set; }
-
         /// <summary>
         /// Location name
         /// </summary>
@@ -28,7 +27,6 @@ namespace BookStore.Domain.Model
         /// Inventories related to specified store
         /// </summary>
         public virtual ICollection<Inventory> Inventory { get; set; }
-
         /// <summary>
         /// Orders related to specified store
         /// </summary>
