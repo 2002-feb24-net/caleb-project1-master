@@ -40,10 +40,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.OrderItem.First().Product.Product.Price)
+                @Html.DisplayNameFor(model => model.OrderItem.First().Inventory.Product.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OrderItem.First().Product.Product.Name)
+                @Html.DisplayNameFor(model => model.OrderItem.First().Inventory.Product.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OrderItem.First().Quantity)
@@ -57,10 +57,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem=>item.Product.Product.Price)
+                    @Html.DisplayFor(modelItem=>item.Inventory.Product.Price)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem=>item.Product.Product.Name)
+                    @Html.DisplayFor(modelItem=>item.Inventory.Product.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem=>item.Quantity)

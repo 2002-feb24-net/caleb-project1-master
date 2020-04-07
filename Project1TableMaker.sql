@@ -16,8 +16,6 @@ PRIMARY KEY (ID)
 CREATE TABLE Stores (
 ID int,
 Address nvarchar(200),
---Stock int,
---removed stock b/c new Inventory table has Quantity
 PRIMARY KEY (ID)
 );
 CREATE TABLE Customers (
@@ -30,12 +28,10 @@ PRIMARY KEY (ID)
 );
 CREATE TABLE Orders (
 ID int,
-ProductID int,
 CustomerID int,
 StoreID int,
-Price money,
+Total money,
 OrderTime datetime,
-Quantity int,
 PRIMARY KEY (ID),
 FOREIGN KEY (CustomerID) REFERENCES Customers(ID),
 FOREIGN KEY (StoreID) REFERENCES Stores(ID)
@@ -52,10 +48,10 @@ FOREIGN KEY (StoreID) REFERENCES Stores(ID)
 CREATE TABLE OrderItem (
 ID int,
 OrderID int,
-ProductID int,
 Quantity int,
+InventoryID int,
 PRIMARY KEY (ID),
 FOREIGN KEY (OrderID) REFERENCES Orders(ID),
-FOREIGN KEY (ProductID) REFERENCES Products(ID)
+FOREIGN KEY (InventoryID) REFERENCES Inventory(ID)
 );
-SELECT * FROM Inventory;
+SELECT * FROM OrderItem;
