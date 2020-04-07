@@ -15,19 +15,19 @@
             <button style="padding:5px;margin:5px;background-color:#F0F7EE;">
                 <a asp-action="Create" class="button">Create an Order</a>
             </button>
-            
-            @using (Html.BeginForm("SortOrders"))
-            {
-                <div class="form-group">
-                    <select class="form-control" name="SortOption">
-                        <option value="Earliest">Earliest</option>
-                        <option value="Latest">Latest</option>
-                        <option value="Most Expensive">Most Expensive</option>
-                        <option value="Least Expensive">Least Expensive</option>
-                    </select>
-                    <input asp-action="SortOrders" name="SortOption" style="padding:5px;margin:5px;background-color:#F0F7EE;" class="sort-orders" type="submit" value="Sort" id="sort-btn"/>
-                </div>
-            }
+
+     @*       <!--  @using (Html.BeginForm("SortOrders"))
+      {
+          <div class="form-group">
+              <select class="form-control" name="SortOption">
+                  <option value="Earliest">Earliest</option>
+                  <option value="Latest">Latest</option>
+                  <option value="Most Expensive">Most Expensive</option>
+                  <option value="Least Expensive">Least Expensive</option>
+              </select>
+              <input asp-action="SortOrders" name="SortOption" style="padding:5px;margin:5px;background-color:#F0F7EE;" class="sort-orders" type="submit" value="Sort" id="sort-btn"/>
+          </div>
+      }-->  *@
         </div>
     </div>
     <div id="function-inputs">

@@ -32,8 +32,8 @@
         <form asp-action="CreateOrderItem">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="@Model.Item.ProductId" class="control-label">Product Name</label>
-                <select asp-for="@Model.Item.ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+                <label asp-for="@Model.Item.Product" class="control-label">Product Name</label>
+                <select asp-for="@Model.Item.Product" class="form-control" asp-items="ViewBag.Product"></select>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.Item.Quantity" class="control-label">Quantity</label>
