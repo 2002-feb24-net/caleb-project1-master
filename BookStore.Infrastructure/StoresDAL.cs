@@ -59,7 +59,7 @@ namespace BookStore.Infrastructure
         public List<Inventory> GetInventory(int id)
         {
             var listInventoryModel = context.Inventory
-                                            .Include("Inventory")
+                                            .Include("Product")
                                             .Where(i => i.StoreId == id)
                                             .ToList();
 

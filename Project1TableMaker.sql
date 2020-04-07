@@ -57,5 +57,35 @@ FOREIGN KEY (InventoryID) REFERENCES Inventory(ID)
 );
 
 --insert into tables
-
-SELECT * FROM OrderItem;
+INSERT INTO Products (ID, Name, Price, ImageUrl)
+VALUES (1, 'Book About Nothing', 11.95, 'bookaboutnothing.png'),
+	   (2, 'Book About Something', 22.95, 'bookaboutsomething.png'),
+       (3, 'Book About Everything', 33.95, 'bookabouteverything.png');
+	   
+INSERT INTO Stores (ID, Address)
+VALUES (1, 'Dallas'),
+       (2, 'Houston');
+	   
+INSERT INTO Customers (ID, Username, Password, FirstName, LastName)
+VALUES (1, 'username1', 'password1', 'Amy', 'Actor'),
+       (2, 'username2', 'password2', 'Bob', 'Builder'),
+       (3, 'username3', 'password3', 'Charlie', 'Chaplin');
+	   
+INSERT INTO Orders (ID, CustomerID, StoreID, Total, OrderTime)
+VALUES (1, 1, 1, 11.95, CURRENT_TIMESTAMP),
+       (2, 2, 1, 33.95, CURRENT_TIMESTAMP),
+       (3, 3, 2, 22.95, CURRENT_TIMESTAMP);
+	   
+INSERT INTO Inventory (ID, ProductID, StoreID, Quantity)
+VALUES (1, 1, 1, 111),
+       (2, 2, 1, 122),
+       (3, 3, 1, 133),
+       (4, 1, 2, 211),
+       (5, 2, 2, 222),
+       (6, 3, 2, 233);
+	   
+INSERT INTO OrderItem (ID, OrderID, Quantity, InventoryID)
+VALUES (1, 1, 1, 1),
+       (2, 2, 1, 3),
+       (3, 3, 1, 5);
+SELECT * FROM Customers;
