@@ -121,7 +121,7 @@ namespace BookStore.UI.Controllers
             return false;
         }
 
-        public IActionResult AddMore([Bind("Id", "OrderId", "Quantity", "InventoryId")] OrderItem item)
+        public IActionResult AddMore([Bind("OrderId", "Quantity", "InventoryId")] OrderItem item)
         {
             if (!AddOrderItem(item))
             {
@@ -145,7 +145,7 @@ namespace BookStore.UI.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateOrderItem([Bind("Id", "OrderId", "Quantity", "InventoryId")] OrderItem item)
+        public IActionResult CreateOrderItem([Bind("OrderId", "Quantity", "InventoryId")] OrderItem item)
         {
 
             if (AddOrderItem(item))
@@ -243,7 +243,7 @@ namespace BookStore.UI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerId,StoreId,Total,OrderTime")] Orders order)
+        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,StoreId,Total,OrderTime")] Orders order)
         {
             if (id != order.Id)
             {

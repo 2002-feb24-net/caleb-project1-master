@@ -64,7 +64,7 @@ namespace BookStore.UI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Username,Password,FirstName,LastName")] Customers customer)
+        public IActionResult Create([Bind("Username,Password,FirstName,LastName")] Customers customer)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +104,7 @@ namespace BookStore.UI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,Username,Password,FirstName,LastName")] Customers customer)
+        public IActionResult Edit(int id, [Bind("Username,Password,FirstName,LastName")] Customers customer)
         {
             //username must remain unique
             if (_context.FindByID(id).Username != customer.Username)
