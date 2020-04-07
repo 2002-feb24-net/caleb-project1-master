@@ -49,3 +49,19 @@ steps:
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
+
+# search repo for any ASP.Net project, runs dotnet publish, and zips the results 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+
+# built in task best way to deploy to azure app service
+# this task looks for a zip file and deploys it to your app service
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(61757056-d06b-4ce2-a315-9821c05c50fe)'
+    appType: 'webApp'
+    WebAppName: 'p1-bookstore-crownover'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
