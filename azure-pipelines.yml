@@ -18,10 +18,34 @@ pool:
 # on windows it'll run in command prompt
 # give all steps a good display name
 steps:
-- script: echo Hello, world!
-  displayName: Run a one-line script
 
-- script: |
-    echo "Showing current directory contents"
-    ls
-  displayName: Show directory contents
+#- script: echo Hello, world!
+#  displayName: Run a one-line script
+
+#- script: |
+#    echo "Showing current directory contents"
+#    ls
+#  displayName: Show directory contents
+
+#runs build
+- script: dotnet build
+  displayName: dotnet build
+
+#runs tests continues despite test fail
+#- script: dotnet test
+#  continueOnError: true
+#  displayName: dotnet test
+
+# apart from script, there are also "task" steps
+# a task step implements common build operations that would be clumsy
+# to write by hand in a script step
+- script: dotnet test --logger trx
+  continueOnError: true
+  displayName: dotnet test
+
+# the default condition for every step is "succeeded()" --run this step if every previous step succeeded
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
