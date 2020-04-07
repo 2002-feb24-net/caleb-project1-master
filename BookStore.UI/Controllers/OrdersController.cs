@@ -74,10 +74,10 @@ namespace BookStore.UI.Controllers
                     sortedOrdersList = ords.OrderBy(x => x.OrderTime);
                     break;
                 case "Most Expensive":
-                    sortedOrdersList = ords.OrderByDescending(x => x.Price);
+                    sortedOrdersList = ords.OrderByDescending(x => x.Total);
                     break;
                 case "Least Expensive":
-                    sortedOrdersList = ords.OrderBy(x => x.Price);
+                    sortedOrdersList = ords.OrderBy(x => x.Total);
                     break;
             }
             return View("Index", sortedOrdersList);
@@ -107,11 +107,11 @@ namespace BookStore.UI.Controllers
             int orderID = Convert.ToInt32(TempData["OrderID"]);
             TempData["OrderID"] = orderID;
             //validate current item's quantity
-            if (ModelState.IsValid && item.ValidateQuantity(_locContext.GetQty(item.ProductId)))
+            if (ModelState.IsValid && item.ValidateQuantity(_locContext.GetQty(item.InventoryId)))
             {
                 //set old failed quantity to current entered quantity
                 //update product's quantity then set the corresponding order id 
-                _locContext.UpdateInventory(item.ProductId, item.Quantity);
+                _locContext.UpdateInventory(item.InventoryId, item.Quantity);
                 item.OrderId = orderID;
                 _context.AddOrderItem(item);
                 logger.LogInformation($"Adding item to {1}", item.OrderId);
@@ -202,7 +202,7 @@ namespace BookStore.UI.Controllers
                     {
                         StoreId = order.StoreId,
                         CustomerId = cid,
-                        Price = 0,
+                        Total = 0,
                         OrderTime = TimeZoneInfo.ConvertTime(DateTime.Now, cst)
                     };
                     TempData["OrderID"] = _context.Add(new_order);

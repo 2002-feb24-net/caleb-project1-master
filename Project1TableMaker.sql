@@ -11,6 +11,7 @@ CREATE TABLE Products (
 ID int,
 Name nvarchar(100),
 Price money,
+ImageURL nvarchar(500),
 PRIMARY KEY (ID)
 );
 CREATE TABLE Stores (

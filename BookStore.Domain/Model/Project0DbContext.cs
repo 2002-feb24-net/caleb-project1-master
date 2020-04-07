@@ -61,12 +61,12 @@ namespace BookStore.Domain.Model
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Inventory)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__Inventory__Produ__5DB5E0CB");
+                    .HasConstraintName("FK__Inventory__Produ__113584D1");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.Inventory)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__Inventory__Store__5EAA0504");
+                    .HasConstraintName("FK__Inventory__Store__1229A90A");
             });
 
             modelBuilder.Entity<OrderItem>(entity =>
@@ -82,12 +82,12 @@ namespace BookStore.Domain.Model
                 entity.HasOne(d => d.Inventory)
                     .WithMany(p => p.OrderItem)
                     .HasForeignKey(d => d.InventoryId)
-                    .HasConstraintName("FK__OrderItem__Inven__627A95E8");
+                    .HasConstraintName("FK__OrderItem__Inven__15FA39EE");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderItem)
                     .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK__OrderItem__Order__618671AF");
+                    .HasConstraintName("FK__OrderItem__Order__150615B5");
             });
 
             modelBuilder.Entity<Orders>(entity =>
@@ -100,21 +100,19 @@ namespace BookStore.Domain.Model
 
                 entity.Property(e => e.OrderTime).HasColumnType("datetime");
 
-                entity.Property(e => e.Price).HasColumnType("money");
-
-                entity.Property(e => e.ProductId).HasColumnName("ProductID");
-
                 entity.Property(e => e.StoreId).HasColumnName("StoreID");
+
+                entity.Property(e => e.Total).HasColumnType("money");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK__Orders__Customer__59E54FE7");
+                    .HasConstraintName("FK__Orders__Customer__0D64F3ED");
 
                 entity.HasOne(d => d.Store)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.StoreId)
-                    .HasConstraintName("FK__Orders__StoreID__5AD97420");
+                    .HasConstraintName("FK__Orders__StoreID__0E591826");
             });
 
             modelBuilder.Entity<Products>(entity =>
@@ -122,6 +120,10 @@ namespace BookStore.Domain.Model
                 entity.Property(e => e.Id)
                     .HasColumnName("ID")
                     .ValueGeneratedNever();
+
+                entity.Property(e => e.ImageUrl)
+                    .HasColumnName("ImageURL")
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.Name).HasMaxLength(100);
 

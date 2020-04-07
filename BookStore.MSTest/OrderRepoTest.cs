@@ -15,7 +15,7 @@ namespace BookStore.MSTest
     [TestClass]
     class OrderRepoTest
     {
-        public void TestSetup(BookStoreContext context)
+        public void TestSetup(Infrastructure.BookStoreContext context)
         {
             OrdersDAL Repo;
             StoresDAL LocDal;
@@ -66,16 +66,16 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
 
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
 
                 }
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     TestSetup(context);
                     Debug.WriteLine(context.Customers.ToList().Count);
@@ -87,7 +87,7 @@ namespace BookStore.MSTest
                     {
                         CustomerId = 1,
                         StoreId = 1,
-                        Price = 10,
+                        Total = 10,
                         OrderTime = DateTime.Now
                     };
 
@@ -112,14 +112,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
@@ -128,15 +128,15 @@ namespace BookStore.MSTest
                     {
                         CustomerId = 1,
                         StoreId = 1,
-                        Price = 10,
+                        Total = 10,
                         OrderTime = DateTime.Now
                     };
                     int target = Repo.Add(ord);
                     var toEdit = Repo.FindByID(target);
-                    toEdit.Price = 0;
+                    toEdit.Total = 0;
                     Repo.Edit(toEdit);
                     var editedCust = Repo.FindByID(target);
-                    Assert.AreEqual(0, editedCust.Price);
+                    Assert.AreEqual(0, editedCust.Total);
                     Repo.Remove(target);
                 }
             }
@@ -154,14 +154,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
@@ -172,7 +172,7 @@ namespace BookStore.MSTest
                     {
                         CustomerId = 1,
                         StoreId = 1,
-                        Price = 10,
+                        Total = 10,
                         OrderTime = DateTime.Now
                     };
                     int addedID = Repo.Add(newOrd);
@@ -197,14 +197,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
@@ -213,7 +213,7 @@ namespace BookStore.MSTest
                     {
                         CustomerId = 1,
                         StoreId = 1,
-                        Price = 10,
+                        Total = 10,
                         OrderTime = DateTime.Now
                     };
                     Repo.Add(newOrd);
@@ -223,7 +223,7 @@ namespace BookStore.MSTest
                     {
                         CustomerId = 1,
                         StoreId = 1,
-                        Price = 10,
+                        Total = 10,
                         OrderTime = DateTime.Now
                     };
                     int rem = Repo.Add(newOrd1);
@@ -249,14 +249,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
@@ -265,19 +265,19 @@ namespace BookStore.MSTest
                     {
                         CustomerId = 1,
                         StoreId = 1,
-                        Price = 10,
+                        Total = 10,
                         OrderTime = DateTime.Now
                     };
                     int addedID = Repo.Add(newCust);
                     var orderItem = new OrderItem
                     {
                         OrderId = addedID,
-                        ProductId = 4,
+                        InventoryId = 4,
                         Quantity = 2,
                     };
                     Repo.AddOrderItem(orderItem);
                     var order = Repo.FindByID(addedID);
-                    Assert.AreEqual(0, order.Price);
+                    Assert.AreEqual(0, order.Total);
                     Repo.RemoveOrderItem(orderItem);
                     Repo.Remove(addedID);
                 }
@@ -298,14 +298,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
@@ -313,7 +313,7 @@ namespace BookStore.MSTest
                     var orderItem = new OrderItem
                     {
                         OrderId = 1,
-                        ProductId = 5,
+                        InventoryId = 5,
                         Quantity = qty,
                     };
                     Assert.IsFalse(orderItem.ValidateQuantity(LocDal.GetQty(5)));
@@ -336,14 +336,14 @@ namespace BookStore.MSTest
             conn.Open();
             try
             {
-                var options = new DbContextOptionsBuilder<BookStoreContext>()
+                var options = new DbContextOptionsBuilder<Infrastructure.BookStoreContext>()
                     .UseSqlite(conn)
                     .Options;
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
-                using (var context = new BookStoreContext(options))
+                using (var context = new Infrastructure.BookStoreContext(options))
                 {
                     TestSetup(context);
                     Repo = new OrdersDAL(context);
@@ -351,7 +351,7 @@ namespace BookStore.MSTest
                     var orderItem = new OrderItem
                     {
                         OrderId = 1,
-                        ProductId = 5,
+                        InventoryId = 5,
                         Quantity = qty
                     };
                     Assert.IsTrue(orderItem.ValidateQuantity(LocDal.GetQty(5)));
